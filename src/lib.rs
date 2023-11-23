@@ -21,7 +21,7 @@ use std::ptr;
 use std::slice;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Once;
-
+use std::sync::Mutex;
 // Package version
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 const GHC_VERSION: &'static str = env!("GHC_VERSION");
@@ -139,7 +139,7 @@ extern "C" fn stop_hs() {
 #[pyclass(name="TimeZoneDatabase")]
 #[derive(Debug, Clone)]
 pub struct TimeZoneDatabaseWrapper {
-    ptr: *mut HaskellValue,
+    ptr: Mutex<*mut HaskellValue>,
 }
 
 #[pyproto]
@@ -166,7 +166,7 @@ impl PyGCProtocol for TimeZoneDatabaseWrapper {
 #[pyclass(name="DucklingTime")]
 #[derive(Debug, Clone)]
 pub struct DucklingTimeWrapper {
-    ptr: *mut HaskellValue,
+    ptr: Mutex<*mut HaskellValue>,
 }
 
 #[pymethods]
@@ -199,7 +199,7 @@ impl PyGCProtocol for DucklingTimeWrapper {
 #[pyclass(name="Language")]
 #[derive(Debug, Clone)]
 pub struct LanguageWrapper {
-    ptr: *mut HaskellValue,
+    ptr: Mutex<*mut HaskellValue>,
 }
 
 #[pymethods]
@@ -232,7 +232,7 @@ impl PyGCProtocol for LanguageWrapper {
 #[pyclass(name="Locale")]
 #[derive(Debug, Clone)]
 pub struct LocaleWrapper {
-    ptr: *mut HaskellValue,
+    ptr: Mutex<*mut HaskellValue>,
 }
 
 #[pymethods]
@@ -265,7 +265,7 @@ impl PyGCProtocol for LocaleWrapper {
 #[pyclass(name="Dimension")]
 #[derive(Debug, Clone)]
 pub struct DimensionWrapper {
-    ptr: *mut HaskellValue,
+    ptr: Mutex<*mut HaskellValue>,
 }
 
 #[pyproto]
