@@ -136,7 +136,7 @@ extern "C" fn stop_hs() {
 }
 
 /// Handle to the time zone database stored by Duckling
-#[pyclass(name=TimeZoneDatabase)]
+#[pyclass(name="TimeZoneDatabase")]
 #[derive(Debug, Clone)]
 pub struct TimeZoneDatabaseWrapper {
     ptr: *mut HaskellValue,
@@ -163,7 +163,7 @@ impl PyGCProtocol for TimeZoneDatabaseWrapper {
 // }
 
 /// Handle to the time zone database stored by Duckling
-#[pyclass(name=DucklingTime)]
+#[pyclass(name="DucklingTime")]
 #[derive(Debug, Clone)]
 pub struct DucklingTimeWrapper {
     ptr: *mut HaskellValue,
@@ -196,7 +196,7 @@ impl PyGCProtocol for DucklingTimeWrapper {
 }
 
 /// Handle to a language code stored by Duckling
-#[pyclass(name=Language)]
+#[pyclass(name="Language")]
 #[derive(Debug, Clone)]
 pub struct LanguageWrapper {
     ptr: *mut HaskellValue,
@@ -229,7 +229,7 @@ impl PyGCProtocol for LanguageWrapper {
 }
 
 /// Handle to a locale code stored by Duckling
-#[pyclass(name=Locale)]
+#[pyclass(name="Locale")]
 #[derive(Debug, Clone)]
 pub struct LocaleWrapper {
     ptr: *mut HaskellValue,
@@ -262,7 +262,7 @@ impl PyGCProtocol for LocaleWrapper {
 }
 
 /// Handle to a parsing dimension identifier
-#[pyclass(name=Dimension)]
+#[pyclass(name="Dimension")]
 #[derive(Debug, Clone)]
 pub struct DimensionWrapper {
     ptr: *mut HaskellValue,
