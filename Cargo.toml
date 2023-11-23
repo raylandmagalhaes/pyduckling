@@ -4,4 +4,4 @@ version = "0.1.0"
 edition = "2018"
 
 [dependencies]
-pendulum = "2.1.2"  # Replace with the appropriate version
+pendulum = "^2.1.2"  # Replace with the appropriate version
