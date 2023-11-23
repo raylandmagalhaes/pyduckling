@@ -5,3 +5,4 @@ edition = "2018"
 
 [dependencies]
 pendulum = "0.3.1"  # Replace with the appropriate version
+pyo3 = { version = "0.15", features = ["extension-module"] }
