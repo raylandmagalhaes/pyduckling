@@ -311,11 +311,9 @@ impl Context {
 ///     Opaque handle to a map of time zone data information in Haskell.
 #[pyfunction]
 fn load_time_zones(path: &str) -> PyResult<TimeZoneDatabaseWrapper> {
-    // let c_str = WrappedString::new(path);
     let c_str = CString::new(path).expect("CString::new failed");
     let haskell_ptr = unsafe { wloadTimeZoneSeries(c_str.as_ptr()) };
-    let result = TimeZoneDatabaseWrapper { ptr: haskell_ptr };
-    Ok(result)
+    Ok(TimeZoneDatabaseWrapper { ptr: Mutex::new(haskell_ptr) })
 }
 
 /// Get current reference time, given a Olson time zone
@@ -333,11 +331,9 @@ fn load_time_zones(path: &str) -> PyResult<TimeZoneDatabaseWrapper> {
 ///     Opaque handle to a time reference in Haskell
 #[pyfunction]
 fn get_current_ref_time(tz_db: TimeZoneDatabaseWrapper, tz: &str) -> PyResult<DucklingTimeWrapper> {
-    // let c_str = WrappedString::new(tz);
     let tz_c_str = CString::new(tz).expect("CString::new failed");
-    let haskell_tz = unsafe { wcurrentReftime(tz_db.ptr, tz_c_str.as_ptr()) };
-    let result = DucklingTimeWrapper { ptr: haskell_tz };
-    Ok(result)
+    let haskell_tz = unsafe { wcurrentReftime(tz_db.ptr.lock().unwrap(), tz_c_str.as_ptr()) };
+    Ok(DucklingTimeWrapper { ptr: Mutex::new(haskell_tz) })
 }
 
 /// Parse a reference timestamp on a given Olson time zone
@@ -384,8 +380,7 @@ fn parse_ref_time(
 fn parse_lang(lang: &str) -> PyResult<LanguageWrapper> {
     let lang_c_str = CString::new(lang).expect("CString::new failed");
     let haskell_lang = unsafe { wparseLang(lang_c_str.as_ptr()) };
-    let result = LanguageWrapper { ptr: haskell_lang };
-    Ok(result)
+    Ok(LanguageWrapper { ptr: Mutex::new(haskell_lang) })
 }
 
 /// Retrieve the default locale for a given language
@@ -425,11 +420,8 @@ fn default_locale_lang(lang: LanguageWrapper) -> PyResult<LocaleWrapper> {
 #[pyfunction]
 fn parse_locale(locale: &str, default_locale: LocaleWrapper) -> PyResult<LocaleWrapper> {
     let locale_c_str = CString::new(locale).expect("CString::new failed");
-    let haskell_locale = unsafe { wparseLocale(locale_c_str.as_ptr(), default_locale.ptr) };
-    let result = LocaleWrapper {
-        ptr: haskell_locale,
-    };
-    Ok(result)
+    let haskell_locale = unsafe { wparseLocale(locale_c_str.as_ptr(), default_locale.ptr.lock().unwrap()) };
+    Ok(LocaleWrapper { ptr: Mutex::new(haskell_locale) })
 }
 
 /// Parse a list of dimensions to use during parsing
@@ -461,10 +453,13 @@ fn parse_dimensions(dims: Vec<String>) -> PyResult<Vec<DimensionWrapper>> {
     let haskell_ptrs = unsafe { dimensionListPtrs(haskell_list) };
     let ptr_slice = unsafe { slice::from_raw_parts(haskell_ptrs, haskell_length as usize) };
     let mut result_vec: Vec<DimensionWrapper> = Vec::new();
+
     for ptr in ptr_slice {
-        let wrapper = DimensionWrapper { ptr: *ptr };
+        // Wrap each HaskellValue pointer in a Mutex
+        let wrapper = DimensionWrapper { ptr: Mutex::new(*ptr) };
         result_vec.push(wrapper);
     }
+
     Ok(result_vec)
 }
 
