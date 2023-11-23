@@ -83,7 +83,7 @@ extern "C" {
     pub fn hs_exit();
 }
 
-create_exception!(pyduckling, RuntimeStoppedError, exceptions::Exception);
+create_exception!(pyduckling, RuntimeStoppedError, exceptions::PyException);
 
 /// Initialize the Haskell runtime. This function is safe to call more than once, and
 /// will do nothing on subsequent calls.
