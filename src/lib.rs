@@ -141,6 +141,7 @@ extern "C" fn stop_hs() {
 pub struct TimeZoneDatabaseWrapper {
     ptr: Mutex<*mut HaskellValue>,
 }
+unsafe impl Send for TimeZoneDatabaseWrapper {}
 
 #[pyproto]
 impl PyGCProtocol for TimeZoneDatabaseWrapper {
@@ -168,7 +169,7 @@ impl PyGCProtocol for TimeZoneDatabaseWrapper {
 pub struct DucklingTimeWrapper {
     ptr: Mutex<*mut HaskellValue>,
 }
-
+unsafe impl Send for DucklingTimeWrapper {}
 #[pymethods]
 impl DucklingTimeWrapper {
     #[getter]
@@ -201,7 +202,7 @@ impl PyGCProtocol for DucklingTimeWrapper {
 pub struct LanguageWrapper {
     ptr: Mutex<*mut HaskellValue>,
 }
-
+unsafe impl Send for LanguageWrapper {}
 #[pymethods]
 impl LanguageWrapper {
     #[getter]
@@ -234,7 +235,7 @@ impl PyGCProtocol for LanguageWrapper {
 pub struct LocaleWrapper {
     ptr: Mutex<*mut HaskellValue>,
 }
-
+unsafe impl Send for LocaleWrapper {}
 #[pymethods]
 impl LocaleWrapper {
     #[getter]
@@ -267,6 +268,7 @@ impl PyGCProtocol for LocaleWrapper {
 pub struct DimensionWrapper {
     ptr: Mutex<*mut HaskellValue>,
 }
+unsafe impl Send for DimensionWrapper {}
 
 #[pyproto]
 impl PyGCProtocol for DimensionWrapper {
