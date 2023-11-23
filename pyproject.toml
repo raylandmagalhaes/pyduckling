@@ -6,5 +6,6 @@ build-backend = "maturin"
 manylinux = "off"
 sdist-include = ["duckling-ffi/*"]
 
-# [build-system]
-# requires = ["setuptools", "wheel", "setuptools-rust"]
+[project]
+name = "pyduckling_native"  # Replace with your actual package name
+version = "0.1.0"   
