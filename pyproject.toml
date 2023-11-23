@@ -11,7 +11,7 @@ name = "pyduckling"  # Replace with your actual package name
 version = "0.1.0"
 
 [dependencies]
-pendulum = "^2.1"  # Replace with the appropriate version
+pendulum = "^2.1.2"  # Replace with the appropriate version
 
 [package]
 name = "pyduckling"  # Replace with your actual package name
