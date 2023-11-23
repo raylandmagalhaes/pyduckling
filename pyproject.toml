@@ -7,5 +7,5 @@ manylinux = "off"
 sdist-include = ["duckling-ffi/*"]
 
 [project]
-name = "pyduckling_native"  # Replace with your actual package name
+name = "pyduckling"  # Replace with your actual package name
 version = "0.1.0"   
