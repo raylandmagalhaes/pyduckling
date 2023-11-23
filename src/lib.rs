@@ -116,7 +116,7 @@ pub fn stop() -> PyResult<()> {
         let err = "Haskell: The GHC runtime may only be stopped once. See \
       https://downloads.haskell.org/%7Eghc/latest/docs/html/users_guide\
       /ffi-chap.html#id1";
-        let exc = RuntimeStoppedError::py_err(err.to_string());
+        let exc = PyErr::new::<exceptions::PyException, _>(err.to_string());
         return Err(exc);
     }
     stop_hs();
@@ -137,7 +137,7 @@ extern "C" fn stop_hs() {
 
 /// Handle to the time zone database stored by Duckling
 #[pyclass(name="TimeZoneDatabase")]
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct TimeZoneDatabaseWrapper {
     ptr: Mutex<*mut HaskellValue>,
 }
@@ -165,7 +165,7 @@ impl PyGCProtocol for TimeZoneDatabaseWrapper {
 
 /// Handle to the time zone database stored by Duckling
 #[pyclass(name="DucklingTime")]
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct DucklingTimeWrapper {
     ptr: Mutex<*mut HaskellValue>,
 }
@@ -198,7 +198,7 @@ impl PyGCProtocol for DucklingTimeWrapper {
 
 /// Handle to a language code stored by Duckling
 #[pyclass(name="Language")]
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct LanguageWrapper {
     ptr: Mutex<*mut HaskellValue>,
 }
@@ -231,7 +231,7 @@ impl PyGCProtocol for LanguageWrapper {
 
 /// Handle to a locale code stored by Duckling
 #[pyclass(name="Locale")]
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct LocaleWrapper {
     ptr: Mutex<*mut HaskellValue>,
 }
@@ -264,7 +264,7 @@ impl PyGCProtocol for LocaleWrapper {
 
 /// Handle to a parsing dimension identifier
 #[pyclass(name="Dimension")]
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct DimensionWrapper {
     ptr: Mutex<*mut HaskellValue>,
 }
@@ -282,7 +282,7 @@ impl PyGCProtocol for DimensionWrapper {
 }
 
 #[pyclass]
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct Context {
     pub reference_time: DucklingTimeWrapper,
     pub locale: LocaleWrapper,
