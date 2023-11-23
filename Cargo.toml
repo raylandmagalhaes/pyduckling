@@ -1,5 +1,5 @@
 [package]
-name = "duckling"  # Replace with your actual package name
+name = "pyduckling"  # Replace with your actual package name
 version = "0.1.0"
 edition = "2018"
 
